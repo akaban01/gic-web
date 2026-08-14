@@ -112,17 +112,18 @@
   /*  GIC publishes its own Adhan + Iqamah times (they are not calculated
       here). Update this schedule whenever the masjid posts a new monthly
       timetable — e.g. from the "Monthly Schedule" PDF on gicmasjid.org.
-      Last updated for the schedule in effect: August 2026.               */
+      Last updated for the schedule in effect: August 2026.
+      Jumu'ah is fixed year-round and lives in the HTML, not here.        */
 
   var TZ = "America/Chicago";
 
   var SCHEDULE = {
-    Fajr:    { adhan: "5:26 AM", iqamah: "6:15 AM", note: "Dawn" },
-    Sunrise: { adhan: "6:54 AM", iqamah: null,       note: "Shurooq — no prayer", sun: true },
-    Dhuhr:   { adhan: "1:36 PM", iqamah: "2:00 PM",  note: "Midday" },
-    Asr:     { adhan: "6:20 PM", iqamah: "6:45 PM",  note: "Afternoon" },
-    Maghrib: { adhan: "8:17 PM", iqamah: "8:22 PM",  note: "Sunset" },
-    Isha:    { adhan: "9:39 PM", iqamah: "9:50 PM",  note: "Night" }
+    Fajr:    { adhan: "5:30 AM", iqamah: "6:15 AM", note: "Dawn" },
+    Sunrise: { adhan: "6:57 AM", iqamah: null,       note: "Shurooq — no prayer", sun: true },
+    Dhuhr:   { adhan: "1:35 PM", iqamah: "2:00 PM",  note: "Midday" },
+    Asr:     { adhan: "6:18 PM", iqamah: "6:45 PM",  note: "Afternoon" },
+    Maghrib: { adhan: "8:13 PM", iqamah: "8:18 PM",  note: "Sunset" },
+    Isha:    { adhan: "9:35 PM", iqamah: "9:50 PM",  note: "Night" }
   };
   var ORDER = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"];
 
