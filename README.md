@@ -12,13 +12,16 @@ Plain HTML, CSS, and one JavaScript file — no framework, no build step. Edit
 the `.html` files directly and push.
 
 ```
-index.html          Home — hero, prayer times, mission, programs, donate, map
-about.html           Our story, vision, and the 2018–2025 milestone timeline
-education.html        Quran/Hifz programs, seminary tracks, Al Iman Sunday School, DUA
+index.html          Home — hero, prayer times, mission, programs, DUA,
+                       funeral support, giving, map
+about.html           Our story, vision, the 2018–2025 timeline, governance
+education.html        Quran/Hifz enrolment details, seminary, Sunday School, DUA
 services.html         Funeral coordination, Nikkah/marriage, Imam appointments
-events.html            Featured events + recurring community programs
-resources.html         Understanding Islam, new-Muslim resources, forms
-donate.html            Ways to give + the loan payoff campaign
+events.html            Dated events + recurring programs (classes live on
+                       education.html, not here)
+resources.html         Understanding Islam, new-Muslim resources, forms &
+                       requests (letters, policies, applications)
+donate.html            Ways to give, funds, and the loan payoff campaign
 contact.html           Address, phone, email, map, first-visit guidance
 assets/css/site.css    Design system (light + dark theme)
 assets/js/site.js      Nav, theme toggle, prayer times + countdown

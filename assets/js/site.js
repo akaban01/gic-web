@@ -54,6 +54,54 @@
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setNav(false); });
   window.addEventListener("resize", function () { if (window.innerWidth > 1024) setNav(false); });
 
+  /* ---------------- Sticky header shade ---------------- */
+
+  var header = document.querySelector(".site-header");
+  if (header) {
+    var setShade = function () {
+      header.setAttribute("data-scrolled", String(window.scrollY > 8));
+    };
+    setShade();
+    window.addEventListener("scroll", setShade, { passive: true });
+  }
+
+  /* ---------------- Reveal on scroll ----------------
+     Nothing is hidden until this runs, so the page stays readable
+     without JS (and for anyone who prefers reduced motion).        */
+
+  (function () {
+    if (!("IntersectionObserver" in window)) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var groups = document.querySelectorAll(
+      "main section .section-head, main section .split > *, main section .grid > *," +
+      " main section .stats, main section .timeline > li, main section .contact-grid > *," +
+      " main section > .wrap > .notice, main section > .wrap > .callout-line"
+    );
+    if (!groups.length) return;
+
+    root.classList.add("js-reveal");
+
+    var seen = new WeakMap();
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-in");
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: .08 });
+
+    groups.forEach(function (el) {
+      el.classList.add("reveal");
+      // Stagger siblings a little so rows of cards cascade rather than pop.
+      var parent = el.parentNode;
+      var i = seen.get(parent) || 0;
+      seen.set(parent, i + 1);
+      if (i) el.style.setProperty("--reveal-delay", Math.min(i, 4) * 70 + "ms");
+      io.observe(el);
+    });
+  })();
+
   /* ---------------- Footer year ---------------- */
 
   document.querySelectorAll("[data-year]").forEach(function (el) {
@@ -123,12 +171,17 @@
       }).format(new Date());
     }
     if (!list) return;
-    list.innerHTML = ORDER.map(function (key) {
+    var head =
+      '<li class="prayer-rows__head" aria-hidden="true">' +
+        "<span></span><span>Prayer</span><span>Adhan</span><span>Iqamah</span>" +
+      "</li>";
+    list.innerHTML = head + ORDER.map(function (key) {
       var row = SCHEDULE[key];
       return '<li data-slot="' + key + '"' + (row.sun ? ' class="is-sun"' : "") + '>' +
         '<span class="p-icon" aria-hidden="true">' + (ICONS[key] || "") + "</span>" +
         '<span class="p-name">' + key + "<small>" + row.note + "</small></span>" +
-        '<span class="p-time">' + (row.iqamah || row.adhan) + "</span>" +
+        '<span class="p-adhan">' + row.adhan + "</span>" +
+        '<span class="p-time">' + (row.iqamah || "&mdash;") + "</span>" +
       "</li>";
     }).join("");
   }
