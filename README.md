@@ -12,8 +12,8 @@ Plain HTML, CSS, and one JavaScript file — no framework, no build step. Edit
 the `.html` files directly and push.
 
 ```
-index.html          Home — hero, prayer times, mission, programs, DUA,
-                       funeral support, giving, map
+index.html          Home — hero, prayer times, Jumu'ah (#jumuah), mission,
+                       programs, DUA, funeral support, giving, map
 about.html           Our story, vision, the 2018–2025 timeline, governance
 education.html        Quran/Hifz enrolment details, seminary, Sunday School, DUA
 services.html         Funeral coordination, Nikkah/marriage, Imam appointments
@@ -48,7 +48,14 @@ masjid posts a new monthly timetable.**
 
 Jumu'ah timings are hard-coded in the HTML because they are fixed and
 published: 1st khutbah 2:00 PM / salah 2:30 PM, 2nd khutbah 3:00 PM / salah
-3:30 PM.
+3:30 PM. They appear in three places — the hero prayer card's strip, the
+`#jumuah` section on the home page, and the Jumu'ah row on `contact.html` —
+so update all three together.
+
+GIC's own site serves its schedule from `https://www.gicmasjid.org/api/prayer-times`
+(its front end is a JS app, so the times are not in the page source). That
+endpoint is the quickest way to check the current timetable before editing
+`SCHEDULE`.
 
 ## Deploying
 
