@@ -38,6 +38,36 @@ live account or a document GIC hosts privately (Mohid portal, PayPal/Venmo
 links, bylaws PDF, various forms) are routed to `info@gicmasjid.org` instead
 of a guessed URL, so nothing links out to a fabricated address.
 
+## Events and flyers
+
+gicmasjid.org is a JavaScript app, so nothing useful is in its page source.
+Its content comes from two JSON endpoints, which are the practical way to
+check what the masjid is currently publishing:
+
+```
+https://www.gicmasjid.org/api/prayer-times
+https://www.gicmasjid.org/api/events
+```
+
+`/api/events` returns each event's title, `imageUrl` (the flyer), and
+registration link. The flyers themselves carry the real detail — dates,
+times, ages, tuition, instructors — which is transcribed into the cards on
+`events.html`, since an image alone is not readable to search engines or
+screen readers.
+
+The six flyers live in `assets/img/events/` as WebP, resized to 1000px wide
+(~700 KB for the set; the originals total ~5 MB). To refresh them:
+
+1. `curl -s https://www.gicmasjid.org/api/events | python3 -m json.tool`
+2. Download each `imageUrl` (prefix with `https://www.gicmasjid.org`).
+3. Resize to 1000px wide and save as WebP quality 82 into `assets/img/events/`.
+4. Update the matching card text in `events.html` — and the summary list in
+   the `#events` section of `index.html` — from what the flyer actually says.
+
+Flyer thumbnails open full size in a `<dialog>` lightbox (`data-flyer` in
+`site.js`). Without JavaScript the thumbnail is still a plain link to the
+image, so it keeps working.
+
 ## Prayer times
 
 `assets/js/site.js` holds a hard-coded `SCHEDULE` object with GIC's own

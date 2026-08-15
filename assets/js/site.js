@@ -108,6 +108,43 @@
     el.textContent = String(new Date().getFullYear());
   });
 
+  /* ---------------- Flyer viewer ----------------
+     Event flyers are dense with text, so the card thumbnail links to the
+     full-size image. With JS on, it opens in a <dialog> instead of
+     navigating away; without JS, the link still works on its own.      */
+
+  var flyerModal = null;
+
+  function openFlyer(src, alt) {
+    if (!flyerModal) {
+      flyerModal = document.createElement("dialog");
+      flyerModal.className = "flyer-modal";
+      flyerModal.innerHTML =
+        '<button type="button" class="flyer-close" aria-label="Close flyer">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>' +
+        "</button><img alt=\"\">";
+      document.body.appendChild(flyerModal);
+      flyerModal.addEventListener("click", function (ev) {
+        // Close on the backdrop or the close button, but not on the image.
+        if (ev.target === flyerModal || ev.target.closest(".flyer-close")) flyerModal.close();
+      });
+    }
+    var img = flyerModal.querySelector("img");
+    img.src = src;
+    img.alt = alt || "";
+    if (typeof flyerModal.showModal === "function") flyerModal.showModal();
+  }
+
+  document.addEventListener("click", function (ev) {
+    var trigger = ev.target.closest("[data-flyer]");
+    if (!trigger) return;
+    var dlg = document.createElement("dialog");
+    if (typeof dlg.showModal !== "function") return; // no <dialog> support: follow the link
+    ev.preventDefault();
+    var img = trigger.querySelector("img");
+    openFlyer(trigger.getAttribute("href"), img ? img.getAttribute("alt") : "");
+  });
+
   /* ---------------- Prayer times ---------------- */
   /*  GIC publishes its own Adhan + Iqamah times (they are not calculated
       here). Update this schedule whenever the masjid posts a new monthly

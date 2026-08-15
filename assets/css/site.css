@@ -647,6 +647,72 @@ a.card:hover .card-link { gap: .7rem; }
 .meta-list dt { color: var(--ink-3); margin: 0; }
 .meta-list dd { margin: 0; color: var(--ink); font-weight: 500; text-align: right; }
 
+/* ---------- Events & flyers ---------- */
+
+.event-feature { display: grid; gap: clamp(1.5rem, 3.5vw, 2.75rem); align-items: start; }
+@media (min-width: 860px) { .event-feature { grid-template-columns: minmax(0, .8fr) 1fr; } }
+
+/* A flyer is a link that opens the full-size image */
+.event-flyer {
+  display: block; position: relative;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface-2); overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.event-flyer img { display: block; width: 100%; height: auto; }
+.event-flyer:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--line-strong); }
+@media (prefers-reduced-motion: reduce) { .event-flyer:hover { transform: none; } }
+.event-flyer::after {
+  content: ""; position: absolute; right: .6rem; bottom: .6rem;
+  width: 30px; height: 30px; border-radius: 8px;
+  background: rgba(13, 47, 33, .78) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7'/%3E%3C/svg%3E") center / 15px 15px no-repeat;
+  opacity: 0; transition: opacity .18s ease;
+}
+.event-flyer:hover::after, .event-flyer:focus-visible::after { opacity: 1; }
+
+/* Event cards need far more width than a normal card: the flyer thumbnail
+   and a schedule table sit side by side, so cap the grid at two columns. */
+.event-grid {
+  display: grid; gap: clamp(1rem, 2.2vw, 1.6rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
+}
+
+.event-card { display: grid; gap: 1.15rem; align-content: start; }
+@media (min-width: 560px) { .event-card { grid-template-columns: 165px minmax(0, 1fr); } }
+/* Hug the thumbnail rather than stretching to the row height */
+.event-card .event-flyer { box-shadow: none; align-self: start; }
+.event-card__body { min-width: 0; }
+.event-card__body h3 { margin-bottom: .45rem; }
+.event-card__body .meta-list { margin-top: .9rem; }
+.event-card__body .btn-row { margin-top: 1.1rem; }
+.event-card__body .muted { margin: .9rem 0 0; font-size: .82rem; }
+
+/* Full-size flyer viewer */
+dialog.flyer-modal {
+  padding: 0; border: 0; background: transparent;
+  max-width: min(94vw, 760px); max-height: 94vh;
+  overflow: visible;
+}
+dialog.flyer-modal::backdrop { background: rgba(8, 14, 11, .82); backdrop-filter: blur(3px); }
+dialog.flyer-modal img {
+  display: block; width: 100%; height: auto; max-height: 94vh; object-fit: contain;
+  border-radius: var(--radius); box-shadow: var(--shadow-lg);
+}
+dialog.flyer-modal .flyer-close {
+  position: absolute; top: -14px; right: -14px;
+  width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+  border: 1px solid rgba(255,255,255,.3);
+  background: var(--green-deep); color: #fff;
+  display: grid; place-items: center;
+}
+dialog.flyer-modal .flyer-close svg { width: 18px; height: 18px; }
+dialog.flyer-modal .flyer-close:hover { background: var(--gold); color: var(--green-deep); border-color: var(--gold); }
+@media (max-width: 600px) {
+  dialog.flyer-modal { max-width: 92vw; }
+  dialog.flyer-modal .flyer-close { top: -12px; right: -12px; width: 36px; height: 36px; }
+}
+
 /* ---------- Stats ---------- */
 
 .stats {
