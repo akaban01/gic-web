@@ -38,6 +38,12 @@ live account or a document GIC hosts privately (Mohid portal, PayPal/Venmo
 links, bylaws PDF, various forms) are routed to `info@gicmasjid.org` instead
 of a guessed URL, so nothing links out to a fabricated address.
 
+Event flyers on `events.html` (`assets/img/events/`) are the actual flyer
+images published on GIC's own site, fetched from its public
+`/api/events` and `/objects/event-flyers/...` endpoints and re-saved
+locally (resized/re-compressed for web delivery). Update that folder and
+the cards in `events.html` whenever GIC posts new flyers.
+
 ## Prayer times
 
 `assets/js/site.js` holds a hard-coded `SCHEDULE` object with GIC's own
